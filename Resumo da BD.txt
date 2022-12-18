@@ -1,0 +1,23 @@
+Entidades:
+
+
+
+
+
+
+
+Tabelas:
+
+Users: This table stores information about users of the app. Each user has a unique identifier (user_id), a username, an email address, and a password.
+
+Artists: This table stores information about music artists. Each artist has a unique identifier (artist_id) and a name.
+
+Albums: This table stores information about music albums. Each album has a unique identifier (album_id), a name, a reference to the artist who made the album (Artist), and a release date. The Artist column references the _artist_id_ column in the Artists table.
+
+Songs: This table stores information about individual songs. Each song has a unique identifier (song_id), a name, a reference to the artist who made the song (Artist), a reference to the album the song belongs to (Album), and a duration. The Artist and Album columns reference the _artist_id_ and _album_id_ columns in the Artists and Albums tables, respectively.
+
+Playlists: This table stores information about user-created playlists. Each playlist has a unique identifier (playlist_id), a reference to the user who created the playlist (user_id), a name, a description, and a flag indicating whether the playlist is public or not (is_public). The user_id column references the _user_id_ column in the Users table.
+
+Playlist_songs: This table associates songs with playlists. Each entry in the table has a reference to a playlist (playlist_id) and a reference to a song (song_id). It also has a position field indicating the order in which the song appears in the playlist. The playlist_id and song_id columns reference the _playlist_id_ and _song_id_ columns in the Playlists and Songs tables, respectively.
+
+Followers: This table stores information about users who follow artists. Each entry has a reference to a user (user_id) and a reference to an artist (artist_id). The user_id and artist_id columns reference the _user_id_ and _artist_id_ columns in the Users and Artists tables, respectively.

@@ -1,0 +1,52 @@
+table Users
+(
+  _user_id_,
+  username,
+  email,
+  password,
+)
+
+table Artists
+(
+  _artist_id_,
+  artist_name
+)
+
+table Albums
+(
+  _album_id_,
+  Name,
+  Artist --> Artists.artist_id,
+  ReleaseDate
+)
+
+table Songs
+(
+  _song_id_,
+  Name,
+  Artist --> Artists.artist_id,
+  Album --> Albums.album_id,
+  Duration
+)
+
+table Playlists
+(
+  _playlist_id_,
+  user_id --> Users.user_id,
+  playlist_name,
+  description,
+  is_public
+)
+
+table Playlist_songs
+(
+  playlist_id --> Playlists.playlist_id,
+  song_id --> Songs.song_id,
+  position
+)
+
+table Followers
+(
+  user_id --> Users.user_id,
+  artist_id --> Artists.artist_id
+)

@@ -1,0 +1,70 @@
+CREATE DATABASE IF NOT EXISTS spotifer;
+USE spotifer;
+
+DROP TABLE IF EXISTS `FOLLOWERS`;
+DROP TABLE IF EXISTS `PLAYLIST_SONGS`;
+DROP TABLE IF EXISTS `PLAYLISTS`;
+DROP TABLE IF EXISTS `SONGS`;
+DROP TABLE IF EXISTS `ALBUMS`;
+DROP TABLE IF EXISTS `ARTISTS`;
+DROP TABLE IF EXISTS `USERS`;
+
+CREATE TABLE `USERS` (
+  `user_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`user_id`)
+);
+
+CREATE TABLE `ARTISTS` (
+  `artist_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `artist_name` VARCHAR(255) NOT NULL,
+  PRIMARY KEY(`artist_id`)
+);
+
+CREATE TABLE `ALBUMS` (
+  `album_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(255) NOT NULL,
+  `Artist` INTEGER NOT NULL,
+  `ReleaseDate` DATE NOT NULL,
+  FOREIGN KEY (`Artist`) REFERENCES `ARTISTS`(`artist_id`),
+  PRIMARY KEY (`album_id`)
+);
+
+CREATE TABLE `SONGS` (
+  `song_id` INTEGER NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(255) NOT NULL,
+  `Artist` INTEGER NOT NULL,
+  `Album` INTEGER DEFAULT NULL,
+  `Duration` INTEGER NOT NULL,
+  FOREIGN KEY (`Artist`) REFERENCES `ARTISTS`(`artist_id`),
+  FOREIGN KEY (`Album`) REFERENCES `ALBUMS`(`album_id`),
+  PRIMARY KEY (`song_id`)
+  
+);
+
+CREATE TABLE `PLAYLISTS` (
+  `playlist_id` INTEGER NOT NULL AUTO_INCREMENT,
+  `user_id` INTEGER NOT NULL,
+  `playlist_name` VARCHAR(255) NOT NULL,
+  `description` TEXT,
+  `is_public` BOOLEAN NOT NULL DEFAULT True,
+  FOREIGN KEY (`user_id`) REFERENCES `USERS`(`user_id`),
+  PRIMARY KEY (`playlist_id`)
+);
+
+CREATE TABLE `PLAYLIST_SONGS` (
+  `playlist_id` INTEGER NOT NULL,
+  `song_id` INTEGER NOT NULL,
+  `position` INTEGER NOT NULL,
+  FOREIGN KEY (`playlist_id`) REFERENCES `PLAYLISTS`(`playlist_id`),
+  FOREIGN KEY (`song_id`) REFERENCES `SONGS`(`song_id`)
+);
+
+CREATE TABLE `FOLLOWERS` (
+  `user_id` INTEGER NOT NULL,
+  `artist_id` INTEGER NOT NULL,
+  FOREIGN KEY (`user_id`) REFERENCES `USERS`(`user_id`),
+  FOREIGN KEY (`artist_id`) REFERENCES `ARTISTS`(`artist_id`)
+);

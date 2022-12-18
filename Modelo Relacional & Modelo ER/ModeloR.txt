@@ -1,0 +1,45 @@
+Users (
+  user_id,
+  username,
+  email,
+  password,
+)
+
+Artists (
+  artist_id,
+  artist_name
+)
+
+Albums (
+  album_id,
+  artist_id,
+  album_name,
+  release_date,
+  cover_art_url
+)
+
+Songs (
+  song_id,
+  album_id,
+  artist_id,
+  song_name,
+  duration,
+  track_number,
+  file_url
+)
+
+Playlists (
+  playlist_id,
+  user_id,
+  playlist_name,
+  description,
+  is_public
+)
+
+
+Users --- N --- <FOLLOWS> === M === Artists
+Users --- 1 --- <HAS_PLAYLIST> === N === Playlists
+Artists --- M --- <HAS_SONG> === N === Songs
+Songs --- N --- <IN_ALBUM> === 1 === Albums
+Songs --- N --- <IN_PLAYLIST> === M === Playlists
+Artists --- M --- <HAS_ALBUM> === N === Albums
