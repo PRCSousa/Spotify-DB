@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} {{album.Name}} by {{artist.artist_name}} {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+   <p>
+    <b>Músicas no Álbum: </b>
+  </p>
+  <table> 
+  <tr>
+    <th><b>song_id</b></th>
+    <th><b>Name</b></th>
+    <th><b>Duration(s)</b></th>
+   </tr>
+   
+  {% for song in SONGS %}
+    <tr>
+      <td><a href="/songs/{{ song.song_id }}">{{song.song_id}}</a></td>
+      <td>{{ song.Name }}</td>
+      <td>{{ song.Duration }}</td>
+    </tr>
+  {% endfor %}
+  </table>  
+{% endblock %}
+

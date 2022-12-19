@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Songs{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <table> 
+  <tr>
+    <th><b>user_id</b></th>
+    <th><b>username</b></th>
+    <th><b>email</b></th>
+    <th><b>password</b></th>
+   </tr>
+   
+  {% for user in USERS %}
+    <tr>
+      <td><a href="//{{ movie.MovieId }}">{{ movie.MovieId }}</a></td>
+      <td>{{ user.user_id }}</td>
+      <td>{{ user.username }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.password}}</td>
+    </tr>
+  {% endfor %}
+  </table>
+
+  <table> 
+    <tr>
+      <th><b>playlist_id</b></th>
+      <th><b>song_id</b></th>
+     </tr>
+     {% for user in USERS %}
+     <tr>
+       <td><a href="//{{ movie.MovieId }}">{{ movie.MovieId }}</a></td>
+       <td>{{ playlist.playlist_id }}</td>
+       <td>{{ playlist.song_id}}</td>
+     </tr>
+  {% endfor %}
+  </table>    
+
+
+{% endblock %}

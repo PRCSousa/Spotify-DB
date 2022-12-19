@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Songs{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <table> 
+  <tr>
+    <th><b>song_id</b></th>
+    <th><b>Name</b></th>
+    <th><b>Artist</b></th>
+    <th><b>Album</b></th>
+    <th><b>Duration(s)</b></th>
+   </tr>
+   
+  {% for song in SONGS %}
+    <tr>
+      <td><a href="/songs/{{ song.song_id }}">{{ song.song_id}}</a></td>
+      <td>{{ song.Name }}</td>
+      <td>{{ song.Artist }}</td>
+      <td>{{song.Album }}</td>
+      <td>{{ song.Duration }}</td>
+    </tr>
+  {% endfor %}
+  </table>  
+{% endblock %}
+

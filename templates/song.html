@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{{ song.Name }} - by {{artist.artist_name}} {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <h2>Movie info</h2>
+  <p>
+    <b>ID: </b>{{ song.song_id }}
+  </p>
+  <p>
+    <b>Name: </b>{{ song.Name }}
+  </p>
+  <p>
+    <b>Artist ID: </b><a href="/artists/{{ song.Artist }}">{{ song.Artist }}</a>
+  </p>
+  <p>
+    <b>Duration: </b>{{ song.Duration }} seconds
+  </p>
+{% if album.Name != "Não pertence a um album." %}
+  <p>
+    <b>Album: </b><a href="/albums/{{ song.Album }}">{{ album.Name }}</a>
+  </p>
+{% endif %}
+{% if album.Name == "Não pertence a um album." %}
+  <p>
+    <b>Album: </b>{{ album.Name }}
+  </p>
+{% endif %}
+
+  
+{% endblock %}

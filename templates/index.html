@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Spotify Database {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<h2>About</h2>
+<p>Este website foi desenvolvido no âmbito da disciplina de Bases de Dados, utilizando 
+<a href="https://pymysql.readthedocs.io/">PyMySQL</a>,
+<a href="https://flask.palletsprojects.com">Flask</a>, e 
+<a href="https://jinja.palletsprojects.com">Jinja</a>.
+</p>
+
+
+<h2>Estatísticas da Base de Dados:</h2>
+<table>
+<tr>
+  <th>Items</th>
+  <th>Count</th>
+</tr>
+<tr>
+  <td>Artistas</td>
+  <td>{{ stats.artist1 }}</td>
+</tr>
+<tr>
+  <td>Songs</td>
+  <td>{{ stats.song1 }}</td>
+</tr>
+<tr>
+  <td>Albums</td>
+  <td>{{ stats.album1 }}</td>
+</tr>
+</table>
+
+
+<h2>Sample functionality</h2>
+
+<h3>Songs</h3>
+<p>
+   <a href="/songs">List all</a>
+</p>
+
+{% endblock %}

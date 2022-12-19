@@ -1,11 +1,11 @@
 import logging
 import pymysql
 import re
-import subprocess
+
 
 # Change this if necessary
 CONFIG = {
-  'DB': 'guest',
+  'DB': 'movie_stream',
   'USER': 'root',
   'PASSWORD': 'root',
   'HOST': '127.0.0.1',
@@ -32,18 +32,9 @@ def connect():
 def execute(sql,args=None):
   global DB
   sql = re.sub('\s+',' ', sql)
-  print(sql)
   logging.info('SQL: {} Args: {}'.format(sql,args))
   DB._cursor_.execute(sql, args)
   return DB._cursor_
-
-def commit():
-  global DB
-  DB.commit()
-
-def rollback():
-  global DB
-  DB.rollback()
 
 def close():
   global DB
