@@ -24,7 +24,7 @@
     {% for album in ALBUMS %}
       <tr>
         <td>{{ album.album_id}}</td>
-        <td><a href="/albums/{{ album.song_id }}">{{ album.Name }}</a></td>
+        <td><a href="/albums/{{ album.album_id }}">{{ album.Name }}</a></td>
       </tr>
     {% endfor %}
     </table>  
