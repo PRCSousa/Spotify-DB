@@ -1,12 +1,13 @@
 <!doctype html>
 <title>{% block title %}{% endblock %}</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <nav>
   <a href="/">Home</a>
   <a href="/songs">Songs List</a>
   <a href="/artists-list">Artists List</a>
   <a href="/albums-list">Albums List</a>
-  <a href="/songs">Users List</a>
+  <a href="/users-list">Users List</a>
 </nav>
 <section class="content">
   <header>

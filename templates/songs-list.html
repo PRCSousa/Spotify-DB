@@ -16,9 +16,9 @@
    
   {% for song in SONGS %}
     <tr>
-      <td><a href="/songs/{{ song.song_id }}">{{ song.song_id}}</a></td>
-      <td>{{ song.Name }}</td>
-      <td>{{ song.Artist }}</td>
+      <td>{{ song.song_id}}</td>
+      <td><a href="/songs/{{ song.song_id }}">{{ song.Name }}</a></td>
+      <td><a href="/artist/{{ song.Artist }}">{{ song.Artist }}</a></td>
       {% if song.Album != None %}
       <td><a href="/albums/{{ song.Album }}">{{ song.Album }}</a></td>
       {% endif %}

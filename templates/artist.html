@@ -7,7 +7,10 @@
 {% block content %}
   <h2>Info</h2>
   <p>
-    <b>Artist ID: </b>{{ song.Artist }}
+    <b>Artist ID: </b>{{ artist.artist_id }}
+  </p>
+  <p>
+    <b>Nº Followers: </b> {{followers.numfollowers}}
   </p>
 
   <h2> Albums </h2>
@@ -20,8 +23,8 @@
      
     {% for album in ALBUMS %}
       <tr>
-        <td><a href="/albums/{{ album.song_id }}">{{ album.album_id}}</a></td>
-        <td>{{ album.Name }}</td>
+        <td>{{ album.album_id}}</td>
+        <td><a href="/albums/{{ album.song_id }}">{{ album.Name }}</a></td>
       </tr>
     {% endfor %}
     </table>  

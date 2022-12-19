@@ -14,7 +14,7 @@
   {% for artist in ARTISTS %}
     <tr>
       <td>{{ artist.artist_id }}</td>
-      <td>{{ artist.artist_name }}</td>
+      <td><a href="/artist/{{ artist.artist_id }}">{{ artist.artist_name }}</a></td>
     </tr>
   {% endfor %}
   </table>  

@@ -116,8 +116,12 @@ def artist(id):
       FROM ALBUMS
       WHERE Artist = %s
       ''', id).fetchall()
+
+    stats = {}
+    x = db.execute('SELECT COUNT(*) AS numfollowers FROM FOLLOWERS where artist_id = %s', id).fetchone()
+    stats.update(x) 
     
-    return render_template('albums-list.html', ALBUMS=album, artist=artist)
+    return render_template('artist.html', ALBUMS=album, artist=artist, followers=stats)
 
 @APP.route('/artists-list/')
 def list_artists():
@@ -128,3 +132,14 @@ def list_artists():
       ORDER BY artist_id
       ''').fetchall()
     return render_template('artists-list.html', ARTISTS=artists)
+
+
+@APP.route('/users-list/')
+def list_users():
+    users = db.execute(
+        '''
+      SELECT user_id, username, email, password
+      FROM USERS
+      ORDER BY user_id
+      ''').fetchall()
+    return render_template('users-list.html', USERS=users)

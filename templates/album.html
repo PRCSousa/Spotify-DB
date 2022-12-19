@@ -18,8 +18,8 @@
    
   {% for song in SONGS %}
     <tr>
-      <td><a href="/songs/{{ song.song_id }}">{{song.song_id}}</a></td>
-      <td>{{ song.Name }}</td>
+      <td>{{song.song_id}}</td>
+      <td><a href="/songs/{{ song.song_id }}">{{ song.Name }}</a></td>
       <td>{{ song.Duration }}</td>
     </tr>
   {% endfor %}
