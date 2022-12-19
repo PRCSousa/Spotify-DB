@@ -16,33 +16,28 @@ sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
 albumdict = {}
 
-
-# Primeiro recebemos uma lista de URLs de artistas
-
-artistas_file = open("artistas.txt", "r")
+artistas_file = open("playlists.txt", "r")
 data = artistas_file.read()
 
-artist_urls = data.split("\n")
+pls_urls = data.split("\n")
 artistas_file.close()
 
+for playlist in pls_urls:
+    result = sp.playlist_tracks(playlist)
+    artist_name = result['items'][0]['track']['artists'][0]['name']
 
-for i in artist_urls:
-    result = sp.artist(i)
-    artist_uri = result['uri']
-    artist_name = result['name']
     cur.execute("INSERT INTO ARTISTS (artist_name) VALUES (%s) ", artist_name)
     conn.commit()
     id = cur.lastrowid
 
-    for x in range(0, 10):
-        result = sp.artist_top_tracks(i)
+    for x in range(0, len(result['items'])):
         # se está num album ou é single
-        album = result['tracks'][x]['album']['album_type']
+        album = result['items'][x]['track']['album']['album_type']
 
         if album == "album":
-            album_name = result['tracks'][x]['album']['name']  # nome do album
+            album_name = result['items'][x]['track']['album']['name']  # nome do album
             # release date do album
-            release_date = result['tracks'][x]['album']['release_date']
+            release_date = result['items'][x]['track']['album']['release_date']
 
             if album_name not in albumdict:
                 cur.execute("INSERT INTO ALBUMS (Name, Artist, ReleaseDate) VALUES (%s, %s, %s)",
@@ -52,9 +47,8 @@ for i in artist_urls:
                 albumdict[album_name] = album_id
 
             # nome do artista
-            artist_name = result['tracks'][x]['artists'][0]['name']
-            music_name = result['tracks'][x]['name']  # nome
-            duration = result['tracks'][x]['duration_ms'] / \
+            music_name = result['items'][x]['track']['name']  # nome
+            duration = result['items'][x]['track']['duration_ms'] / \
                 1000  # duração segundos
 
             cur.execute("INSERT INTO SONGS (Name, Artist, Album, Duration) VALUES (%s, %s, %s, %s) ",
@@ -63,9 +57,8 @@ for i in artist_urls:
 
         else:
             # nome do artista
-            artist_name = result['tracks'][x]['artists'][0]['name']
-            music_name = result['tracks'][x]['name']  # nome
-            duration = result['tracks'][x]['duration_ms'] / \
+            music_name = result['items'][x]['track']['name']  # nome
+            duration = result['items'][x]['track']['duration_ms'] / \
                 1000  # duração segundos
 
             cur.execute(
@@ -167,3 +160,6 @@ for i in playlist:
 
 os.remove("dados.sql")
 os.system("mysqldump --no-create-info -u root -p spotifer > dados.sql")
+
+
+

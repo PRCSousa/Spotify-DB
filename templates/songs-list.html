@@ -16,10 +16,15 @@
    
   {% for song in SONGS %}
     <tr>
-      <td><a href="/songs/{{ song.song_id }}">{{ song.song_id}}</a></td>
+      <td><a href="/songs/{{ song.song_id }}">{{ song.song_id}}</a></td>
       <td>{{ song.Name }}</td>
       <td>{{ song.Artist }}</td>
-      <td>{{song.Album }}</td>
+      {% if song.Album != None %}
+      <td><a href="/albums/{{ song.Album }}">{{ song.Album }}</a></td>
+      {% endif %}
+      {% if song.Album == None %}
+      <td>{{ song.Album }}</td>
+      {% endif %}
       <td>{{ song.Duration }}</td>
     </tr>
   {% endfor %}
