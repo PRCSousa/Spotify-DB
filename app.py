@@ -63,8 +63,6 @@ def get_song(id):
     return render_template('song.html',
                            song=song, artist=artist, album=album)
 
-# Songs
-
 
 @APP.route('/albums/<int:id>/')
 def list_album_songs(id):
@@ -110,6 +108,7 @@ def artist(id):
       FROM ARTISTS
       WHERE artist_id = %s
       ''', id).fetchone()
+
     album = db.execute(
         '''
       SELECT album_id, Name, Artist
@@ -119,9 +118,18 @@ def artist(id):
 
     stats = {}
     x = db.execute('SELECT COUNT(*) AS numfollowers FROM FOLLOWERS where artist_id = %s', id).fetchone()
-    stats.update(x) 
+    stats.update(x)
+
+    song = db.execute(
+        '''
+      SELECT song_id, Name, Duration, Album
+      FROM SONGS
+      WHERE Artist = %s AND Album IS NULL
+      ''', id).fetchall()
     
-    return render_template('artist.html', ALBUMS=album, artist=artist, followers=stats)
+    logging.info(song)
+
+    return render_template('artist.html', ALBUMS=album, artist=artist, followers=stats, SONGS=song)
 
 @APP.route('/artists-list/')
 def list_artists():
@@ -143,3 +151,66 @@ def list_users():
       ORDER BY user_id
       ''').fetchall()
     return render_template('users-list.html', USERS=users)
+
+
+@APP.route('/playlists-list/')
+def list_playlsits():
+    playlists = db.execute(
+        '''
+      SELECT playlist_id, playlist_name, user_id, description, is_public
+      FROM PLAYLISTS
+      ORDER BY playlist_id
+      ''').fetchall()
+    return render_template('playlists-list.html', PLAYLISTS=playlists)
+
+
+@APP.route('/playlist/<int:id>/')
+def list_playlist_songs(id):
+    playlist = db.execute(
+        '''
+      SELECT playlist_id, playlist_name, user_id, description, is_public
+      FROM PLAYLISTS
+      WHERE playlist_id = %s
+      ''', id).fetchone()
+    song = db.execute(
+        '''
+        SELECT song_id, Name, Artist, Duration , Album
+        FROM SONGS
+        WHERE Album = %s
+        ''', id).fetchall()
+    logging.info(song)
+
+    user = db.execute(
+        '''
+      SELECT user_id, username
+      FROM USERS
+      WHERE user_id = %s
+      ''', playlist["user_id"]).fetchone()
+
+    return render_template('playlist.html', playlist=playlist, SONGS=song, user=user)
+
+
+@APP.route('/user/<int:id>/')
+def user(id):
+    aartist = db.execute(
+        '''
+      SELECT user_id, artist_id, artist_name
+      FROM FOLLOWERS NATURAL JOIN ARTISTS
+      WHERE user_id = %s
+      ''', id).fetchall()
+
+    playlist = db.execute(
+        '''
+      SELECT playlist_id, playlist_name, user_id, description, is_public
+      FROM PLAYLISTS
+      WHERE user_id = %s
+      ''', id).fetchall()
+
+    user = db.execute(
+        '''
+      SELECT user_id, username, email, password
+      FROM USERS
+      WHERE user_id = %s
+      ''', id).fetchone()
+    
+    return render_template('user.html', user=user, ARTISTS=aartist, PLAYLISTS=playlist)

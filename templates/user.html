@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} {{user.username}} {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <h2>Info</h2>
+  <p>
+    <b>User ID: </b>{{ user.user_id }}
+  </p>
+  <p>
+    <b>Email: </b>{{ user.email }}
+  </p>
+  <p>
+    <b>Password: </b>{{ user.password }}
+  </p>
+
+<div style="margin: auto; float: left;">
+  <h2> Playlists </h2>
+
+  <table> 
+    <tr>
+      <th><b>playlist_id</b></th>
+      <th><b>playlist_name</b></th>
+      <th><b>description</b></th>
+      <th><b>is_public</b></th>
+    </tr>
+     
+    {% for playlist in PLAYLISTS %}
+    <tr>
+      <td>{{ playlist.playlist_id}}</td>
+      <td><a href="/playlist/{{ playlist.playlist_id }}">{{ playlist.playlist_name }}</a></td>
+      <td>{{ playlist.description}}</td>
+      <td>{{ playlist.is_public}}</td>
+    </tr>
+  {% endfor %}
+    </table>
+</div>
+<div style="margin: auto; float: right;">
+  <h2> Followed Artists </h2>
+
+  <table> 
+    <tr>
+      <th><b>artist_id</b></th>
+      <th><b>Name</b></th>
+    </tr>
+     
+    {% for artist in ARTISTS %}
+
+    <tr>
+        <td>{{ artist.artist_id }}</td>
+        <td><a href="/artist/{{ artist.artist_id }}">{{ artist.artist_name }}</a></td>
+      </tr>
+
+  {% endfor %}
+
+    </table>
+</div>
+  
+{% endblock %}

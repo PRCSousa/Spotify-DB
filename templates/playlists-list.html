@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Playlists{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <table> 
+  <tr>
+    <th><b>playlist_id</b></th>
+    <th><b>playlist_name</b></th>
+    <th><b>user_id</b></th>
+    <th><b>description</b></th>
+    <th><b>is_public</b></th>
+   </tr>
+   
+  {% for playlist in PLAYLISTS %}
+    <tr>
+      <td>{{ playlist.playlist_id}}</td>
+      <td><a href="/playlist/{{ playlist.playlist_id }}">{{ playlist.playlist_name }}</a></td>
+      <td><a href="/user/{{ playlist.user_id }}">{{ playlist.user_id }}</a></td>
+      <td>{{ playlist.description}}</td>
+      <td>{{ playlist.is_public}}</td>
+    </tr>
+  {% endfor %}
+  </table>  
+{% endblock %}
+

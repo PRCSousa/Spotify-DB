@@ -1,34 +1,56 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %} {{artist.artist_name}} {% endblock %}</h1>
+<h1>{% block title %} {{artist.artist_name}} {% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-  <h2>Info</h2>
-  <p>
-    <b>Artist ID: </b>{{ artist.artist_id }}
-  </p>
-  <p>
-    <b>Nº Followers: </b> {{followers.numfollowers}}
-  </p>
 
+<h2>Info</h2>
+<p>
+  <b>Artist ID: </b>{{ artist.artist_id }}
+</p>
+<p>
+  <b>Nº Followers: </b> {{followers.numfollowers}}
+</p>
+
+<div style="margin: auto; float: right;">
   <h2> Albums </h2>
 
-  <table> 
+  <table>
     <tr>
       <th><b>album_id</b></th>
       <th><b>Name</b></th>
     </tr>
-     
+
     {% for album in ALBUMS %}
-      <tr>
-        <td>{{ album.album_id}}</td>
-        <td><a href="/albums/{{ album.album_id }}">{{ album.Name }}</a></td>
-      </tr>
+    <tr>
+      <td>{{ album.album_id}}</td>
+      <td><a href="/albums/{{ album.album_id }}">{{ album.Name }}</a></td>
+    </tr>
     {% endfor %}
-    </table>  
+  </table>
+</div>
+
+<div style="width:40%; margin: auto; float:left;">
+  <h2> Singles </h2>
+
+  <table>
+    <tr>
+      <th><b>song_id</b></th>
+      <th><b>Name</b></th>
+      <th><b>Duration</b></th>
+    </tr>
+
+    {% for song in SONGS %}
+    <tr>
+      <td>{{ song.song_id}}</td>
+      <td><a href="/songs/{{ song.song_id }}">{{ song.Name }}</a></td>
+      <td>{{ song.Duration }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
 
 
-  
 {% endblock %}

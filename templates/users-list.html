@@ -16,7 +16,7 @@
   {% for user in USERS %}
     <tr>
       <td>{{ user.user_id }}</td>
-      <td>{{ user.username }}</td>
+      <td><a href="/user/{{user.user_id}}">{{ user.username }}</a></td>
       <td>{{ user.email }}</td>
       <td> {{ user.password }}</td>
     </tr>

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Playlist "{{playlist.playlist_name}}" by {{user.username}} {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+   <p>
+    <b>Músicas na Playlist: </b>
+  </p>
+  <table> 
+  <tr>
+    <th><b>song_id</b></th>
+    <th><b>Name</b></th>
+    <th><b>Duration(s)</b></th>
+   </tr>
+   
+  {% for song in SONGS %}
+    <tr>
+      <td>{{song.song_id}}</td>
+      <td><a href="/songs/{{ song.song_id }}">{{ song.Name }}</a></td>
+      <td>{{ song.Duration }}</td>
+    </tr>
+  {% endfor %}
+  </table>
+
+{% endblock %}
+
