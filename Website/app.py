@@ -16,6 +16,10 @@ def index():
     stats.update(x)
     x = db.execute('SELECT COUNT(*) AS album1 FROM ALBUMS').fetchone()
     stats.update(x)
+    x = db.execute('SELECT COUNT(*) AS user1 FROM USERS').fetchone()
+    stats.update(x)
+    x = db.execute('SELECT COUNT(*) AS playlist1 FROM PLAYLISTS').fetchone()
+    stats.update(x)
     logging.info(stats)
     return render_template('index.html', stats=stats)
 
@@ -172,13 +176,13 @@ def list_playlist_songs(id):
       FROM PLAYLISTS
       WHERE playlist_id = %s
       ''', id).fetchone()
-    song = db.execute(
+      
+    asong = db.execute(
         '''
-        SELECT song_id, Name, Artist, Duration , Album
-        FROM SONGS
-        WHERE Album = %s
+        SELECT playlist_id, song_id, position, Name, Duration
+        FROM PLAYLIST_SONGS NATURAL JOIN SONGS
+        WHERE playlist_id = %s
         ''', id).fetchall()
-    logging.info(song)
 
     user = db.execute(
         '''
@@ -187,7 +191,7 @@ def list_playlist_songs(id):
       WHERE user_id = %s
       ''', playlist["user_id"]).fetchone()
 
-    return render_template('playlist.html', playlist=playlist, SONGS=song, user=user)
+    return render_template('playlist.html', playlist=playlist, SONGS=asong, user=user)
 
 
 @APP.route('/user/<int:id>/')
