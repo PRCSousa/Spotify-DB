@@ -76,6 +76,10 @@ def list_album_songs(id):
         FROM ALBUMS
         WHERE album_id = %s
         ''', id).fetchone()
+
+    if album is None:
+        abort(404, 'Album ID {} does not exist.'.format(id))
+
     song = db.execute(
         '''
         SELECT song_id, Name, Artist, Duration , Album
@@ -112,6 +116,9 @@ def artist(id):
       FROM ARTISTS
       WHERE artist_id = %s
       ''', id).fetchone()
+
+    if artist is None:
+          abort(404, 'Artist ID {} does not exist.'.format(id))
 
     album = db.execute(
         '''
@@ -176,6 +183,9 @@ def list_playlist_songs(id):
       FROM PLAYLISTS
       WHERE playlist_id = %s
       ''', id).fetchone()
+
+    if playlist is None:
+        abort(404, 'Playlist ID {} does not exist.'.format(id))
       
     asong = db.execute(
         '''
@@ -216,5 +226,65 @@ def user(id):
       FROM USERS
       WHERE user_id = %s
       ''', id).fetchone()
+
+    if user is None:
+        abort(404, 'User ID {} does not exist.'.format(id))
     
     return render_template('user.html', user=user, ARTISTS=aartist, PLAYLISTS=playlist)
+
+
+@APP.route('/artists-list/search/<expr>/')
+def search_artist(expr):
+  expr = '%' + expr + '%'
+  artists = db.execute(
+      ''' 
+      SELECT artist_id, artist_name
+      FROM ARTISTS 
+      WHERE artist_name LIKE %s
+      ''', expr).fetchall()
+  return render_template('artists-list.html', ARTISTS=artists)
+
+@APP.route('/songs/search/<expr>/')
+def search_song(expr):
+  expr = '%' + expr + '%'
+  songs = db.execute(
+      ''' 
+      SELECT song_id, Name, Artist, Album, Duration 
+      FROM SONGS
+      WHERE Name LIKE %s
+      ''', expr).fetchall()
+  return render_template('songs-list.html', SONGS=songs)
+
+@APP.route('/albums-list/search/<expr>/')
+def search_album(expr):
+  expr = '%' + expr + '%'
+  album = db.execute(
+      ''' 
+      SELECT album_id, Name, Artist
+      FROM ALBUMS
+      WHERE Name LIKE %s
+      ''', expr).fetchall()
+  return render_template('albums-list.html', ALBUMS=album)
+
+@APP.route('/users-list/search/<expr>/')
+def search_user(expr):
+  expr = '%' + expr + '%'
+  user = db.execute(
+      ''' 
+      SELECT user_id, username, email, password
+      FROM USERS
+      WHERE username LIKE %s
+      ''', expr).fetchall()
+  return render_template('users-list.html', USERS=user)
+
+
+@APP.route('/playlists-list/search/<expr>/')
+def search_playlist(expr):
+  expr = '%' + expr + '%'
+  playlist = db.execute(
+      ''' 
+      SELECT playlist_id, playlist_name, user_id, description, is_public
+      FROM PLAYLISTS
+      WHERE Name LIKE %s
+      ''', expr).fetchall()
+  return render_template('albums-list.html', PLAYLISTS=playlist)

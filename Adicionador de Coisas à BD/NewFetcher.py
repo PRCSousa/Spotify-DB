@@ -75,7 +75,15 @@ users = [
     ["Sofia Martins", "sofiamartins@mail.com", "bananacake567"],
     ["Joao Rodrigues", "joaorodrigues@mail.com", "strawberryshortcake999"],
     ["Ana Santos", "anasantos@mail.com", "mintchocolatechip87326"],
-    ["Carlos Alberto", "carlosalberto@mail.com", "vanillacreamapplepie456"]
+    ["Carlos Alberto", "carlosalberto@mail.com", "vanillacreamapplepie456"],
+    ["adventurer_123", "adventurer123@gmail.com", "exploretheworld"],
+    ["galactic_guru", "galacticguru@yahoo.com", "starwarsfan"],
+    ["bookworm_bob", "bookwormbob@outlook.com", "ilovereading"],
+    ["cat_lover_123", "catlover123@hotmail.com", "katkittykatkat"],
+    ["monteiroluis", "elmonteiro@gmail.com", "ham_baga"],
+    ["bookworm_cait", "bookwormcait@outlook.com", "ilovebob"],
+    ["cat_lover_123", "catlover123@gmail.com", "kittykatkat"],
+    ["the_hiking_hobo", "thehikinghobo@yahoo.com", "lovetheoutdoors"]
 ]
 
 for i in users:
@@ -87,19 +95,31 @@ for i in users:
 # Adicionamos seguidores
 
 followers = [
-    [1, 2],
-    [1, 4],
-    [2, 1],
-    [2, 3],
-    [3, 1],
-    [3, 2],
-    [3, 4],
-    [5, 6],
-    [5, 7],
-    [6, 1],
-    [6, 3],
+    [1, 3],
+    [2, 6],
+    [3, 9],
+    [4, 12],
+    [5, 15],
+    [6, 2],
     [7, 5],
-    [7, 6]
+    [8, 8],
+    [9, 11],
+    [10, 14],
+    [11, 1],
+    [12, 4],
+    [13, 7],
+    [14, 10],
+    [15, 13],
+    [1, 5],
+    [2, 8],
+    [3, 11],
+    [4, 14],
+    [5, 2],
+    [6, 5],
+    [7, 8],
+    [8, 11],
+    [9, 14],
+    [10, 1]
 ]
 
 for i in followers:
@@ -116,7 +136,15 @@ playlists = [
     [4, "Workout Motivation", "Upbeat tracks to get your heart rate up", 1],
     [5, "Road Trip Playlist", "A mix of pop and rock hits for long car rides", 0],
     [6, "Study Session", "Focus-boosting instrumental tracks", 0],
-    [7, "Summer Hits", "The hottest tracks of the season", 1]
+    [7, "Summer Hits", "The hottest tracks of the season 2021", 1],
+    [2, "Chill Vibes", "Relaxing tunes to unwind after a long day", 0],
+    [3, "Party Playlist", "Only Bangers", 1],
+    [3, "Romantic Dinner", "Smooth and sultry tracks for a romantic evening in", 0],
+    [7, "Motivation", "NULL", 0],
+    [12, "Work from Home", "Upbeat tracks to keep you motivated while working remotely", 0],
+    [9, "Workout Mix 2.0", "High-energy tunes to power through your workout", 1],
+    [14, "Classical Relaxation", "Soothing classical tracks for relaxation", 1],
+    [15, "Indie Discoveries", "Fresh indie tracks to discover and enjoy", 0]
 ]
 
 for i in playlists:
@@ -126,39 +154,32 @@ for i in playlists:
 
 
 # E para terminar pomos umas musicas na playlist
+import random
+plp = []
 
-playlist = [
-    [1, 31, 1],
-    [1, 19, 2],
-    [1, 14, 3],
-    [2, 17, 1],
-    [2, 22, 2],
-    [2, 8, 3],
-    [6, 59, 1],
-    [6, 23, 2],
-    [6, 46, 3],
-    [6, 70, 4],
-    [2, 12, 4],
-    [2, 31, 5],
-    [2, 50, 6],
-    [3, 3, 1],
-    [3, 32, 2],
-    [3, 55, 3],
-    [3, 67, 4],
-    [4, 1, 1],
-    [4, 15, 2],
-    [4, 27, 3],
-    [5, 7, 1],
-    [5, 29, 2],
-    [5, 53, 3]
-]
+for i in range(100):
+    plp.append(0)
+
+
+playlist = []
+for i in range(100):
+    playlist_id = random.randint(1, 14)
+    music_id = random.randint(1, 772)
+    plp[playlist_id] += 1
+    entry = [playlist_id, music_id, plp[playlist_id]]
+    playlist.append(entry)
+
+
+
 
 for i in playlist:
     cur.execute(
         "INSERT INTO PLAYLIST_SONGS (playlist_id, song_id, position) VALUES (%s, %s, %s)", (i[0], i[1], i[2]))
     conn.commit()
 
-os.remove("dados.sql")
+if os.path.exists("dados.sql"):
+    os.remove("dados.sql")
+
 os.system("mysqldump --no-create-info -u root -p spotifer > dados.sql")
 
 
