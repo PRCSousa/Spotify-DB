@@ -59,7 +59,8 @@ CREATE TABLE `PLAYLIST_SONGS` (
   `song_id` INTEGER NOT NULL,
   `position` INTEGER NOT NULL,
   FOREIGN KEY (`playlist_id`) REFERENCES `PLAYLISTS`(`playlist_id`),
-  FOREIGN KEY (`song_id`) REFERENCES `SONGS`(`song_id`)
+  FOREIGN KEY (`song_id`) REFERENCES `SONGS`(`song_id`),
+  PRIMARY KEY (`playlist_id`, `song_id`)
 );
 
 CREATE TABLE `FOLLOWERS` (
@@ -67,4 +68,5 @@ CREATE TABLE `FOLLOWERS` (
   `artist_id` INTEGER NOT NULL,
   FOREIGN KEY (`user_id`) REFERENCES `USERS`(`user_id`),
   FOREIGN KEY (`artist_id`) REFERENCES `ARTISTS`(`artist_id`)
+  PRIMARY KEY (`user_id`, `artist_id`)
 );
